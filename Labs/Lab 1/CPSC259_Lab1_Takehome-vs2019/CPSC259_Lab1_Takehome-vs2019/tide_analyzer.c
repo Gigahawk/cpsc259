@@ -1,16 +1,16 @@
 /*
-File:         tide_analyzer.c
-Purpose:      Consumes a semi-formatted tide measurement file and
-determines if the corresponding tide is once- or
-twice-daily using a fast discrete Fourier transformation.
-The tide measurement file is a txt file whose name
-corresponds to the name defined in the preprocessor
-directive.  It is a series of NUMBER_OF_READINGS tidal
-readings (in mm) taken hourly.
-Author:			  Your names
-Student #s:		12345678 and 12345678
-CS Accounts:	a1a1 and b2b2
-Date:				  Add the date here
+File:           tide_analyzer.c
+Purpose:        Consumes a semi-formatted tide measurement file and
+                determines if the corresponding tide is once- or
+                twice-daily using a fast discrete Fourier transformation.
+                The tide measurement file is a txt file whose name
+                corresponds to the name defined in the preprocessor
+                directive.  It is a series of NUMBER_OF_READINGS tidal
+                readings (in mm) taken hourly.
+Author:         Jasper Chan and Vivien Hui
+Student #s:		37467164 and 15608189
+CS Accounts:    g9p2b and 14p2b
+Date:           2019 Sep 15
 */
 
 /******************************************************************
@@ -68,9 +68,8 @@ int main(void)
 	it will give us the wrong frequencies. Remember we're mixing ints and doubles here, and we want
 	the results to be doubles, so you need to do some casting.
 	*/
-	for (i = 0; i < NUMBER_OF_READINGS; i++) {
+	for (i = 0; i < NUMBER_OF_READINGS; i++)
 		omega[i] = (double)i * SAMPLING_FREQUENCY / NUMBER_OF_READINGS;
-	}
 
 
 	/* Opens the file (a text file, not a binary file) for reading, and not writing,
