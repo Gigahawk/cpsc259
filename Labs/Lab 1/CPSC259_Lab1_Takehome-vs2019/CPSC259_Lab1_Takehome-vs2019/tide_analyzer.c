@@ -166,14 +166,14 @@ void process_file(double array_to_populate[], FILE* pointer_to_data_file)
 	int i = 0;
 
 	/* Copies the file, line by line, to line buffer using fgets in a while loop */
-	// while( fgets ( line_buffer, LINESIZE, pointer_to_data_file ) ) {
 	while(fgets(line_buffer, LINESIZE, pointer_to_data_file)) {
 		/* Tries to extract MAX_VALUES_PER_LINE ints from the line buffer and assign
 		them to local array cells using sscanf_s or equivalent.  Stores the return
 		value in a local int */
 		values_per_line = 0;
 		ptr = line_buffer;
-		while (sscanf_s(ptr, "%d%n", &extracted_values[values_per_line], &i) > 0) {
+		while (values_per_line < MAX_VALUES_PER_LINE // Ensure we don't overrun extracted_values
+				&& sscanf_s(ptr, "%d%n", &extracted_values[values_per_line], &i) > 0) {
 			values_per_line++;
 			ptr += i;
 		}
