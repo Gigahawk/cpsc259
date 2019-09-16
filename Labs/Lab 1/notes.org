@@ -1,0 +1,76 @@
+#+TITLE: CPSC 259 Lab 1 Quiz Notes
+\newpage
+* fopen
+#+BEGIN_SRC c :exports code :eval never
+FILE* fopen(const char* filename, const char* mode);
+errno_t fopen_s(FILE** streamptr, const char* filename, const char* mode);
+#+END_SRC
+Opens a file for IO
+** Parameters
+- *filename*: path to file
+- *mode*: file access mode string
+#+ATTR_LATEX: :environment longtable :align p{1in}|l|p{1in}|l|l
+| File access mode string | Meaning         | Explanation                  | Action if exists | Action if doesn't exist |
+|-------------------------+-----------------+------------------------------+------------------+-------------------------|
+| ~"r"~                   | read            | Open a file for reading      | read from start  | failure to open         |
+| ~"w"~                   | write           | Create a file for writing    | destroy contents | create new              |
+| ~"a"~                   | append          | Append to a file             | write to end     | create new              |
+| ~"r+"~                  | read extended   | Open a file for read/write   | read from start  | error                   |
+| ~"w+"~                  | write extended  | Create a file for read/write | destroy contents | create new              |
+| ~"a+"~                  | append extended | Open a file for read/write   | write to end     | create new              |
+- *streamptr*: pointer to file pointer
+* fclose
+#+BEGIN_SRC c :exports code :eval never
+int fclose(FILE* stream);
+#+END_SRC
+Closes a file
+** Parameters
+- *stream*: file pointer
+** Returns
+0 on success, ~EOF~ on failure
+\newpage
+* fgets
+#+BEGIN_SRC c :exports code :eval never
+char* fgets(char* str, int num, FILE* stream);
+#+END_SRC
+Read characters from a stream and store into string.
+Will read at most ~num~ characters, or up to a newline or ~EOF~, whichever comes first.
+** Parameters
+- *str*: string to copy characters into
+- *num*: max number of characters to copy
+- *stream*: file pointer
+** Returns
+- ~str~ on success
+- ~NULL~ if no characters were read or error (blank line/file)
+  - ~ferror~ is set if an error occured, ~str~ may have been modified
+\newpage
+* sscanf
+#+BEGIN_SRC c :exports code :eval never
+int sscanf(const char* buffer, const, char* format, ...);
+int sscanf_s(const char* buffer, const char* format, ...);
+#+END_SRC
+Parses data from string and stores results in given locations
+** Parameters
+- *buffer*: string to parse
+- *format*: parse format
+#+ATTR_LATEX: :environment longtable :align l|p{5in}
+| Conversion specifier                   | Explanation                                                                                                                                        |
+|----------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------|
+| ~%~                                    | literal ~%~                                                                                                                                        |
+| ~c~                                    | matches char(s), does not append null to array                                                                                                     |
+| ~s~                                    | matches a sequence of non-whitspace chars, up to /width/ or the next newline, whichever is first                                                   |
+| ~[~ /set/ ~]~                          | matches a sequence of chars from /set/ chars. If ~^~ is the first char, the match is negated. ~]~ must be the first char of the set to be included |
+| ~d~                                    | matches a decimal integer                                                                                                                          |
+| ~i~                                    | matches an integer, base is determined by first characters parsed                                                                                  |
+| ~u~                                    | matches an unsigned decimal integer                                                                                                                |
+| ~o~                                    | matches an unsigned octal integer                                                                                                                  |
+| ~x~, ~X~                               | matches an unsigned hex integer                                                                                                                    |
+| ~n~                                    | returns number of characters read so far, does not consume any input                                                                               |
+| ~a~, ~A~, ~e~, ~E~, ~f~, ~F~, ~g~, ~G~ | matches a floating-point number                                                                                                                    |
+| ~p~                                    | matches a pointer as printed by ~printf()~                                                                                                         |
+
+- *...*: pointers to locations to assign parsed information
+** Returns
+Number of arguments assigned, or ~EOF~ on error
+
+
